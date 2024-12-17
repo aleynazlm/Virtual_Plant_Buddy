@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Plant Buddy</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Başlık ve Açıklama -->
+  <header class="hero">
+    <h1>Sanal Bitki Arkadaşınıza Merhaba Deyin!</h1>
+    <p>Bitkinizi büyütün, ona iyi bakın ve doğayı keşfedin.</p>
+    <button class="start-button">Bakımına Başla</button>
+  </header>
+
+  <!-- Bitki Durumu Kartları -->
+  <section class="plant-status">
+    <div class="status-card">
+      <i class="fas fa-tint" style="color: #B1F0F7;"></i>
+      <h2>Su Seviyesi</h2>
+      <p id="water-level">%75</p>
+    </div>
+    <div class="status-card">
+      <i class="fas fa-sun" style="color: #FFD600;"></i>
+      <h2>Güneş Işığı</h2>
+      <p id="sunlight-level">%50</p>
+    </div>
+    <div class="status-card">
+      <i class="fas fa-heart" style="color: #FF2929;"></i>
+      <h2>Genel Sağlık</h2>
+      <p id="health-status">Harika!</p>
+    </div>
+  </section>
+
+  <!-- Bitki Görseli -->
+  <section class="plant-image">
+    <img id="plantImage" src="img/bitki.png" alt="Healthy Plant">
+  </section>
+
+  <script>
+    // Değişkenler
+    let waterLevel = 75;
+    let sunlightLevel = 50;
+
+    // Rastgele değer üretme fonksiyonu
+    function getRandomValue(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // Bitki durumu kontrol fonksiyonu
+    function updatePlantStatus() {
+      const waterElement = document.getElementById("water-level");
+      const sunlightElement = document.getElementById("sunlight-level");
+      const healthElement = document.getElementById("health-status");
+      const plantImage = document.getElementById("plantImage");
+
+      // Su ve güneş değerlerini rastgele ayarla
+      waterLevel = getRandomValue(0, 100);
+      sunlightLevel = getRandomValue(0, 100);
+
+      // Ekrana güncel değerleri yaz
+      waterElement.textContent = `%${waterLevel}`;
+      sunlightElement.textContent = `%${sunlightLevel}`;
+
+      // Sağlık durumu belirleme
+      const isHealthy = waterLevel >= 50 && sunlightLevel >= 50;
+      healthElement.textContent = isHealthy ? "Harika!" : "Daha Fazla İlgi Gerek!";
+
+      // Renk değişimi
+      waterElement.style.color = waterLevel >= 75 ? 'green' : (waterLevel >= 50 ? 'orange' : 'red');
+      sunlightElement.style.color = sunlightLevel >= 75 ? 'yellow' : (sunlightLevel >= 50 ? 'orange' : 'red');
+
+      // Bitki görseli durumu
+      if (isHealthy) {
+        plantImage.src = 'img/bitki.png';
+        plantImage.style.opacity = 1;
+        plantImage.style.transform = "scale(1)";
+      } else {
+        plantImage.src = 'img/bitki.png';
+        plantImage.style.opacity = 0.5;
+        plantImage.style.transform = "scale(0.9)";
+      }
+    }
+
+    // Butona tıklama olayı
+    document.querySelector('.start-button').addEventListener('click', updatePlantStatus);
+  </script>
+</body>
+</html>
